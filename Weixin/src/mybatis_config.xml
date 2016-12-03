@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-
+                       
     <!-- 引用db.properties配置文件 -->
     <properties resource="mysql.properties"/>
     <!-- 
-        development : 开发模式
+        development : 开发模�?
         work : 工作模式
      -->
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC" />
-            <!-- 配置数据库连接信息 -->
+            <!-- 配置数据库连接信�?-->
             <dataSource type="POOLED">
-                <!-- value属性值引用db.properties配置文件中配置的值 -->
+                <!-- value属性值引用db.properties配置文件中配置的�?-->
                 <property name="driver" value="${driver}" />
                 <property name="url" value="${url}" />
                 <property name="username" value="${username}" />
