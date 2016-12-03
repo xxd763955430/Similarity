@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>弹幕审核页</title>
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.css">
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/bootstrap-table.css">
+<script src="js/bootstrap-table.min.js"></script>
+</head>
+<body>
+<div class="container">
+<form class="form-horizontal" role="form">
+  <div class="form-group">
+    <label class="col-sm-offset-2 col-sm-2 control-label">系统消息</label>
+    <div class="col-sm-2">
+      <input type="text" class="form-control" id="systemMessage" placeholder="系统消息">     
+    </div> 
+    <div class="col-sm-2">
+    <button class="btn btn-info col-sm-4" type="button" id="add">添加</button>
+    <label class="col-sm-4 control-label" id="originalCount"></label>
+    <label class="col-sm-4 control-label" id="checkedCount"></label>
+    </div>  
+     <div class="col-sm-2">
+    <button class="btn btn-info" type="button" id="clear">清空</button>
+    </div>  
+  </div>
+   <div class="form-group">
+	    <div class="col-sm-offset-2 col-sm-8">
+	      <table class="table-bordered .table-striped" data-toggle="table" >
+			    <thead>
+			        <tr>
+			            <th class="col-sm-11">Content</th>
+			            <th class="col-sm-1">Delete</th>        
+			        </tr>
+			    </thead>
+			    <tbody>			
+			    </tbody>
+		  </table>   
+	    </div>   
+  	</div>
+  	<div class="form-group">
+	  	<div class="col-sm-offset-2 col-sm-2">
+	    <button class="btn btn-info" type="button" id="send">发送</button> 
+	    </div> 
+    </div>                                          
+</form>  
+</div>
+</body>
+<script>
+var textLength=0,textList;
+var textListAfterChecked=new Array();
+getCount();
+setInterval("getCount()", 1000);
+loadBarrage();
+function deletetext(i)
+{
+	$("#tr"+i).remove();
+	delete(textList[i]);
+}
+function loadBarrage()
+{
+		$("tr:gt(0)").remove();
+		$.ajax({
+	        type: "GET",
+	        data:{"param":"check"},
+	        url: "getOriginalBarrage", 
+	        dataType:"json",
+	        async: false,
+	        success: function(data){
+	        $.each(data,function(i,item){
+	        	textLength++;
+	        	var tr="<tr id=tr"+i+"><td><label id=label"+i+">"+item+"</label></td>"+"<td><button class='btn-sm btn-danger' id=button"+i+ " onclick='deletetext("+i+")'><span class='glyphicon glyphicon-remove'></span></button></td></tr>";	        	
+	        	$("tbody").append(tr);        	
+	        	});       	
+	        }		
+	   });
+		textList=new Array(textLength);
+		for(i=0;i<textLength;i++)
+		{
+			textList[i]=$("#label"+i).text();
+		}
+	
+}
+//发送按钮
+$("#send").click(function()
+		{
+	if(textLength>0)
+		{
+			for(i=0;i<textLength;i++)
+			{
+				if(typeof(textList[i])!= "undefined")
+				{
+					//0开头为弹幕
+					textList[i]="0"+textList[i];	
+					textListAfterChecked.push(textList[i]);			
+				}
+			}	
+
+			sendBarrageAfterChecked();		
+		}
+	loadBarrage();
+});
+//添加系统消息
+$("#add").click(function()
+	{
+			//1开头为系统消息
+			var systemMessage="1"+$("#systemMessage").val();
+			textListAfterChecked.push(systemMessage);	
+			$("#systemMessage").val("");
+	});
+$("#clear").click(function()
+		{
+	$.ajax({
+        type: "GET",
+        url: "getOriginalBarrage",
+        data: {"param":"clear"}, 
+        success: function(data){   
+        	console.log('cleared');	
+        }
+   	});		
+});
+function sendBarrageAfterChecked()
+{
+	$.ajax({
+        type: "POST",
+        url: "sendCheckedBarrage",
+        async: false,
+        data: {"textList":textListAfterChecked}, 
+        traditional: true,
+        success: function(data){   
+        	textListAfterChecked.length=0;   	
+        	textLength=0;
+        }
+   });		
+}
+function getCount()
+{	
+	$.ajax({
+        type: "GET",
+        url: "getOriginalBarrage",
+        data: {"param":"count"}, 
+        traditional: true,
+        success: function(data){
+        	countArray=eval(data);
+        	$("#originalCount").text(countArray[0]);
+        	$("#checkedCount").text(countArray[1]);
+        }
+   });		
+}
+</script>
+</html>

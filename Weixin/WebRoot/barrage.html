@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Generator" content="EditPlus®">
+    <meta name="Author" content="xuxiaodong">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>JQuery弹幕</title>
+    <link href="" rel="stylesheet" />
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="static/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="dist/css/barrager.css">
+    <link rel="stylesheet" type="text/css" href="static/pick-a-color/css/pick-a-color-1.2.3.min.css">
+    <link type="text/css" rel="stylesheet" href="static/syntaxhighlighter/styles/shCoreDefault.css"/>
+    <style type="text/css">
+		body{
+			background:url(background.jpg) no-repeat;
+			background-size:100% 100%;
+			overflow:hidden;
+		}
+        .barrageRegion{
+			background-image:url(maoboli.png);
+			position:relative;
+			background-size:100% 100%;
+           
+        }
+        .barrageRegion p{
+            position:relative;
+            left:1000px;
+            margin:0;
+            padding:0;
+        }
+    </style>
+</head>
+<body class="bb-js">
+	<div class="container"></div>
+
+	<script type="text/javascript" src="static/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="static/js/tinycolor-0.9.15.min.js"></script>  
+    <script type="text/javascript" src="dist/js/jquery.barrager.min.js"></script>
+    <script type="text/javascript" src="static/syntaxhighlighter/scripts/shCore.js"></script>
+    <script type="text/javascript" src="static/syntaxhighlighter/scripts/shBrushJScript.js"></script>
+    <script type="text/javascript" src="static/syntaxhighlighter/scripts/shBrushPhp.js"></script>
+    <script type="text/javascript" src="static/pick-a-color/js/pick-a-color-1.2.3.min.js"></script>  
+    <script type="text/javascript">
+		//获取窗口宽高
+		var screenHeight= $(window).height();
+		$('body').css("height",screenHeight);
+		//设置弹幕区域宽高
+		var barrageHeight=screenHeight*0.6;	
+		var lineHeight=60;
+		var barrageLines=5;
+		var splitHeight=(barrageHeight-lineHeight*barrageLines)/(barrageLines+1);
+		//弹幕文字数组
+		var barrageList=new Array();
+		var lineLastPositions=new Array(0,0,0,0,0);
+		var count=1,speed=6;
+		var yaix=new Array();
+		
+		function checkBarrage(){
+			for (i = 0; i < barrageLines; i++)
+            {
+                if (barrageList.length > 0)
+                {
+                    if (lineLastPositions[i] < 0)
+                    {
+						var content = barrageList.shift().toString();
+						var type = content.substring(0, 1);
+						content = content.substring(1);
+						if(type == "0"){
+							sendBarrage(content,yaix[i],'#000');
+						}else{
+							sendBarrage(content,yaix[i],'#f00');
+						}
+                        lineLastPositions[i] = content.length * 60 + 110;
+                        console.log(content);
+                        console.log(lineLastPositions[i]);
+                        break;
+                    }
+                }
+            }
+            for (i = 0; i < barrageLines; i++){
+            	lineLastPositions[i] -= 10;
+            }
+            if(barrageList.length < 10){
+            	getBarrage();
+            }
+		}		
+
+		function sendBarrage(content,height,color){
+           var item={
+			   info:content, //文字 
+			   color:color,
+			   close:true, //显示关闭按钮 
+			   bottom:height, //距离底部高度,单位px,默认随机 
+			}
+			$('body').barrager(item);
+		}		
+		//设置Y轴位置	
+		function setLinePositionY(){
+		var currentLine = parseInt((barrageLines + 1) / 2);
+			yaix.push((currentLine - 1) * (lineHeight + splitHeight) + splitHeight + screenHeight*0.2);
+			var newBelowLine = true;
+			for (i = 1; i < barrageLines; i++)
+			{
+				if (newBelowLine)
+				{
+					currentLine += i;
+					newBelowLine = false;
+				}
+				else
+				{
+					currentLine -= i;
+					newBelowLine = true;
+				}
+			   yaix.push((currentLine - 1) * (lineHeight + splitHeight) + splitHeight + screenHeight*0.2);
+			}
+		} 
+		$(document).ready(function(){
+			setLinePositionY();
+			setInterval("checkBarrage()",60);
+		});
+		
+		function getBarrage(){
+			$.ajax({
+	        type: "GET",
+	        url: "getCheckedBarrage", 
+	        data:"json",
+	        success: function(data){
+	        	var barrageArray = eval(data);
+	        	$.each(barrageArray,function(i,item){   
+	        		barrageList.push(item);   
+	        	});				
+			  }		
+		  });
+		}
+    </script>
+</body>
+</html> 

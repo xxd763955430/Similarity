@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.weixin.mapping.userMapper">
+	<insert id="addWeixinUser" parameterType="com.weixin.pojo.WeixinUserInfo">
+	  insert into weixinuser(Openid,Nickname) values(#{openId},#{nickname})
+	</insert>
+    <select id="getUser" parameterType="String" 
+        resultType="com.weixin.domain.User">
+        select * from user where Id=#{id}
+    </select>
+    <select id="getAllUser"  
+        resultType="com.weixin.domain.User">
+        select * from user
+    </select>
+</mapper>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+  <servlet>
+    <servlet-name>coreServlet</servlet-name>
+    <servlet-class>
+			com.weixin.servlet.CoreServlet
+		</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>coreServlet</servlet-name>
+    <url-pattern>/coreServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>oauthServlet</servlet-name>
+    <servlet-class>
+			com.weixin.servlet.OAuthServlet
+		</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>oauthServlet</servlet-name>
+    <url-pattern>/oauthServlet</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>Register</display-name>
+    <servlet-name>Register</servlet-name>
+    <servlet-class>com.weixin.servlet.RegisterServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Register</servlet-name>
+    <url-pattern>/register.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UploadImgServlet</display-name>
+    <servlet-name>UploadImgServlet</servlet-name>
+    <servlet-class>com.weixin.servlet.UploadImgServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UploadImgServlet</servlet-name>
+    <url-pattern>/uploadImgServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SaveNewsServlet</display-name>
+    <servlet-name>SaveNewsServlet</servlet-name>
+    <servlet-class>com.weixin.servlet.SaveNewsServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>ShowUserServlet</servlet-name>
+    <servlet-class>com.weixin.servlet.ShowUserServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>DeleteUserServlet</servlet-name>
+    <servlet-class>com.weixin.servlet.DeleteUserServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>SearchUserServlet</servlet-name>
+    <servlet-class>com.weixin.servlet.SearchUserServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>GetOriginalBarrage</servlet-name>
+    <servlet-class>com.weixin.servlet.GetOriginalBarrage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SaveNewsServlet</servlet-name>
+    <url-pattern>/saveNewsServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ShowUserServlet</servlet-name>
+    <url-pattern>/showUserServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DeleteUserServlet</servlet-name>
+    <url-pattern>/deleteUserServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SearchUserServlet</servlet-name>
+    <url-pattern>/searchUserServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>GetOriginalBarrage</servlet-name>
+    <url-pattern>/getOriginalBarrage</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SendCheckedBarrage</display-name>
+    <servlet-name>SendCheckedBarrage</servlet-name>
+    <servlet-class>com.weixin.servlet.SendCheckedBarrage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SendCheckedBarrage</servlet-name>
+    <url-pattern>/sendCheckedBarrage</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetCheckedBarrage</display-name>
+    <servlet-name>GetCheckedBarrage</servlet-name>
+    <servlet-class>com.weixin.servlet.GetCheckedBarrage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetCheckedBarrage</servlet-name>
+    <url-pattern>/getCheckedBarrage</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetPhoneNumList</display-name>
+    <servlet-name>GetPhoneNumList</servlet-name>
+    <servlet-class>com.weixin.servlet.GetPhoneNumList</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetPhoneNumList</servlet-name>
+    <url-pattern>/getPhoneNumList</url-pattern>
+  </servlet-mapping>
+</web-app>
