@@ -1,4 +1,4 @@
-package com.weixin.domain;
+﻿package com.weixin.domain;
 
 import java.util.Date;
 /**
@@ -7,7 +7,7 @@ import java.util.Date;
  *
  */
 public class User {
-	private int id;//自增id
+	private int id;//自增的id
 	private String openid;//微信id
 	private String name;
 	private String teacherid;

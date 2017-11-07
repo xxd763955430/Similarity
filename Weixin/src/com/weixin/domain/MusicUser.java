@@ -3,6 +3,7 @@ package com.weixin.domain;
  * 
  * @author xuxiaodong
  *
+ *
  */
 
 public class MusicUser {
